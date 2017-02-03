@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router';
 
 class Header extends Component {
   render() {
@@ -7,7 +8,7 @@ class Header extends Component {
         <nav className="navbar navbar-toggleable-md navbar-light bg-faded">
           <ul className="navbar-nav">
             <li className="nav-item nav-link">
-              Sign In
+              <Link to="/signin">Sign In</Link>
             </li>
           </ul>
         </nav>
