@@ -32,3 +32,11 @@ export function signinUser({ email, password }) {
       });
   }
 }
+
+export function signoutUser() {
+  // Need to flip authenticated to false and get rid of token
+  localStorage.removeItem('token');
+  return {
+    type: UNAUTH_USER
+  }
+}

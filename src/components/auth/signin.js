@@ -40,8 +40,8 @@ class Signin extends Component {
   }
 }
 
-function mapStateToProps(state) {
-  return { errorMessage: state.auth.error };
+function mapStateToProps({ auth }) {
+  return { errorMessage: auth.error };
 }
 
 export default reduxForm({
