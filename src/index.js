@@ -4,14 +4,21 @@ import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
 import ReduxThunk from 'redux-thunk';
 import { Router, browserHistory } from 'react-router';
+import { AUTH_USER } from './actions/types';
 
 import reducers from './reducers';
 import routes from './routes';
 
 const createStoreWithMiddleware = applyMiddleware(ReduxThunk)(createStore);
+const store = createStoreWithMiddleware(reducers);
+const token = localStorage.getItem('token');
+
+if (token) {
+  store.dispatch({ type: AUTH_USER });
+}
 
 ReactDOM.render(
-  <Provider store={createStoreWithMiddleware(reducers)}>
+  <Provider store={store}>
     <Router history={browserHistory} routes={routes} />
   </Provider>
   , document.querySelector('.container'));
