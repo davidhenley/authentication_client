@@ -23,14 +23,17 @@ export function signinUser({ email, password }) {
         // redirect
         browserHistory.push('/feature');
       })
-      .catch(response => {
-        // If request bad, show error
-        dispatch({
-          type: AUTH_ERR,
-          payload: 'Cannot process'
-        });
+      .catch(({ response }) => {
+        dispatch(authError(response.data.error));
       });
   }
+}
+
+export function authError(error) {
+  return {
+    type: AUTH_ERR,
+    payload: error
+  };
 }
 
 export function signoutUser() {
@@ -49,11 +52,8 @@ export function signupUser({ email, password }) {
         localStorage.setItem('token', response.data.token);
         browserHistory.push('/feature');
       })
-      .catch(response => {
-        dispatch({
-          type: AUTH_ERR,
-          payload: 'Cannot process'
-        });
+      .catch(({ response }) => {
+        dispatch(authError(response.data.error));
       });
   }
 }
