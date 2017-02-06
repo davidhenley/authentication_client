@@ -23,20 +23,37 @@ export function signinUser({ email, password }) {
         // redirect
         browserHistory.push('/feature');
       })
-      .catch(() => {
+      .catch(response => {
         // If request bad, show error
         dispatch({
           type: AUTH_ERR,
-          payload: 'Bad login info'
+          payload: 'Cannot process'
         });
       });
   }
 }
 
 export function signoutUser() {
-  // Need to flip authenticated to false and get rid of token
+  // Flip authenticated to false and get rid of token
   localStorage.removeItem('token');
   return {
     type: UNAUTH_USER
+  }
+}
+
+export function signupUser({ email, password }) {
+  return function(dispatch) {
+    axios.post(`${ROOT_URL}/signup`, { email, password })
+      .then(response => {
+        dispatch({ type: AUTH_USER });
+        localStorage.setItem('token', response.data.token);
+        browserHistory.push('/feature');
+      })
+      .catch(response => {
+        dispatch({
+          type: AUTH_ERR,
+          payload: 'Cannot process'
+        });
+      });
   }
 }
